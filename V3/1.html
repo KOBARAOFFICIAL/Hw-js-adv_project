@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Star Wars Characters</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+    <h1>Star Wars Characters</h1>
+    <div id="charactersList"></div>
+    <div id="characterDetails"></div>
+
+    <script>
+        
+        var characters = [];
+        var currentPage = 1;
+        var charactersPerPage = 10;
+        var selectedCharacterIndex = -1;
+
+        function getCharacters() {
+            fetch(`https://swapi.dev/api/people/?page=${currentPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    characters = data.results;
+                    renderCharactersList();
+                })
+                .catch(error => console.error(error));
+        }
+
+        function renderCharactersList() {
+            var charactersListElement = document.getElementById("charactersList");
+            charactersListElement.innerHTML = "";
+
+            characters.forEach((character, index) => {
+                var characterElement = document.createElement("div");
+                characterElement.className = "character";
+                characterElement.textContent = character.name;
+                characterElement.addEventListener("click", function() {
+                    selectedCharacterIndex = index;
+                    renderCharacterDetails();
+                });
+
+                charactersListElement.appendChild(characterElement);
+            });
+
+            var backButton = document.createElement("button");
+            backButton.textContent = "Назад";
+            backButton.addEventListener("click", function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    getCharacters();
+                }
+            });
+            charactersListElement.appendChild(backButton);
+
+            var nextButton = document.createElement("button");
+            nextButton.textContent = "Вперед";
+            nextButton.addEventListener("click", function() {
+                if (characters.length === charactersPerPage) {
+                    currentPage++;
+                    getCharacters();
+                }
+            });
+            charactersListElement.appendChild(nextButton);
+        }
+
+        function renderCharacterDetails() {
+            var characterDetailsElement = document.getElementById("characterDetails");
+            characterDetailsElement.innerHTML = "";
+
+            if (selectedCharacterIndex !== -1) {
+                var character = characters[selectedCharacterIndex];
+
+                var table = document.createElement("table");
+                table.className = "characterDetailsTable";
+
+                var fields = [
+                    "name",
+                    "height",
+                    "mass",
+                    "hair_color",
+                    "skin_color",
+                    "eye_color",
+                    "birth_year",
+                    "gender",
+                    "homeworld",
+                    "films",
+                    "species",
+                    "vehicles",
+                    "starships",
+                    "created",
+                    "edited",
+                    "url"
+                ];
+
+                fields.forEach(field => {
+                    var row = document.createElement("tr");
+                    var fieldCell = document.createElement("td");
+                    var valueCell = document.createElement("td");
+                    fieldCell.textContent = field.replace("_", " ");
+                    valueCell.textContent = character[field] || "Unknown";
+                    row.appendChild(fieldCell);
+                    row.appendChild(valueCell);
+                    table.appendChild(row);
+                });
+
+                characterDetailsElement.appendChild(table);
+
+var backButton = document.createElement("button");
+backButton.textContent = "Назад к списку";
+backButton.addEventListener("click", function() {
+    selectedCharacterIndex = -1;
+    renderCharactersList();
+    renderCharacterDetails();
+});
+characterDetailsElement.appendChild(backButton);
+}
+}
+
+window.addEventListener("load", function() {
+getCharacters();
+});
+</script>
+</body>
+</html>

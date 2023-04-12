@@ -1,0 +1,73 @@
+body {
+    background-image: url(scale.jpeg); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    color: #050505;
+    text-align: center;
+    background-color: #d6a232;
+    border-radius: 30px;
+    width: 400px;
+}
+
+#charactersList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.character {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #9ec3cb;
+    color: #0f1e3f;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.character:hover {
+    background-color: #e5efe7;
+}
+
+button {
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #0f1e3f;
+    color: #9ec3cb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.characterDetailsTable {
+    margin-top: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #9ec3cb;
+    color: #0f1e3f;
+}
+
+.characterDetailsTable tr:nth-child(even) {
+    background-color: #0f1e3f;
+    color: #9ec3cb;
+}
+
+.characterDetailsTable tr:hover {
+    background-color: #e5efe7;
+    color: #050505;
+}
+
+.characterDetailsTable td {
+    padding: 5px 10px;
+    border: 1px solid #9ec3cb;
+}
